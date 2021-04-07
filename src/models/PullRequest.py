@@ -27,7 +27,8 @@ class PullRequest:
             data.get('mergedAt').replace('Z', '+00:00')) if data.get('mergedAt') else None
         self.closed_at = datetime.fromisoformat(
             data.get('closedAt').replace('Z', '+00:00'))
-        self.review_time = int(((self.closed_at - self.created_at).days) * 24)
+        self.review_time = int(
+            ((self.closed_at - self.created_at).seconds) // 3600)
         self.changed_files = data.get('changedFiles')
         self.body_size = len(data.get('body'))
         self.participants_count = data.get('participantsCount')
