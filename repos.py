@@ -58,7 +58,7 @@ def mine_repos():
                         break
 
                     elif repo.pr_count > 100 and not next((r for r in repo_list if r.name_with_owner == repo.name_with_owner), None):
-                        CsvUtils.save_repos_to_csv(
+                        CsvUtils.save_list_to_csv(
                             [repo], 'repos.csv', mode='a', header=False)
 
                         repo_list.append(repo)
@@ -73,7 +73,7 @@ def mine_repos():
                 time.sleep(len(repo_list) * 2)
                 token.next_token()
 
-    CsvUtils.save_repos_to_csv(repo_list, 'final_repos.csv')
+    CsvUtils.save_list_to_csv(repo_list, 'final_repos.csv')
 
 
 if __name__ == '__main__':
