@@ -71,9 +71,6 @@ def mine_repos():
                         pull_request = PullRequest.from_github(
                             pr, repo.name_with_owner)
 
-                        print('Fetching pr cursor: {}'.format(
-                            pull_request.cursor))
-
                         if pull_request.reviews_count > 0 and pull_request.review_time > 1:
                             pr_list.append(pull_request)
 
