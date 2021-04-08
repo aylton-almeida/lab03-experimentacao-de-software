@@ -78,7 +78,7 @@ def mine_repos():
                                 [pull_request], file, mode='a', header=False)
 
                 except GithubException:
-                    time.sleep(len(pr_list) * 2)
+                    time.sleep(180)
                     token.next_token()
             bar.update(index)
 
