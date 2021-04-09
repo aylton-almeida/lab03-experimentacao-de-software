@@ -1,4 +1,6 @@
 import os
+
+from requests.models import ChunkedEncodingError
 from src.models.PullRequest import PullRequest
 import time
 import progressbar
@@ -77,7 +79,7 @@ def mine_repos():
                             CsvUtils.save_list_to_csv(
                                 [pull_request], file, mode='a', header=False)
 
-                except GithubException:
+                except GithubException or ChunkedEncodingError:
                     time.sleep(180)
                     token.next_token()
             bar.update(index)
