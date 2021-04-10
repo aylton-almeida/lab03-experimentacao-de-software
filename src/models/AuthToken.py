@@ -1,6 +1,6 @@
 class AuthToken:
 
-    tokens: list[str]
+    tokens: list
     current_token = 0
 
     def __init__(self, tokens: list) -> None:
