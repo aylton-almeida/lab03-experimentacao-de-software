@@ -87,7 +87,7 @@ def mine_repos():
                     if failures_count == 5:
                         has_next_page = False
                         CsvUtils.save_list_to_csv(
-                            [repo], 'non_read_repos.csv', mode='a', heder=False)
+                            [repo], 'non_read_repos.csv', mode='a', header=False)
                     else:
                         time.sleep(180)
                         token.next_token()
