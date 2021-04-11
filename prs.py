@@ -55,6 +55,8 @@ def mine_repos():
             # reset cursor
             graphql.cursor = None
 
+            failures_count = 0
+
             has_next_page = True
             while has_next_page:
                 try:
@@ -79,9 +81,16 @@ def mine_repos():
                             CsvUtils.save_list_to_csv(
                                 [pull_request], file, mode='a', header=False)
 
-                except GithubException or ChunkedEncodingError:
-                    time.sleep(180)
-                    token.next_token()
+                except:
+                    failures_count += 1
+
+                    if failures_count == 5:
+                        has_next_page = False
+                        CsvUtils.save_list_to_csv(
+                            [repo], 'non_read_repos.csv', mode='a', heder=False)
+                    else:
+                        time.sleep(180)
+                        token.next_token()
             bar.update(index)
 
 
