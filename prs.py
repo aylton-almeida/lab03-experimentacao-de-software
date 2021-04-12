@@ -36,7 +36,7 @@ def mine_repos():
     graphql = Graphql(url, 100)
 
     # read repos csv
-    repo_list = CsvUtils.read_repos_from_csv('final_repos.csv')
+    repo_list = CsvUtils.read_repos_from_csv('non_read_repos.csv')
 
     trimmed_repos = repo_list[initial_repo:]
 
