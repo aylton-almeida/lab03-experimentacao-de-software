@@ -55,9 +55,10 @@ def mine_repos():
             # reset cursor
             graphql.cursor = None
 
-            failures_count = 0
-
             has_next_page = True
+
+            temp_prs_list = []
+
             while has_next_page:
                 try:
                     print('Fetching cursor: {}'.format(graphql.cursor))
@@ -69,6 +70,11 @@ def mine_repos():
                     # fetch prs
                     prs, has_next_page = graphql.get_pr_data(
                         query, token.get_token())
+
+                    temp_prs_list.append(prs)
+
+                    if len(temp_prs_list) % 500 == 0:
+                        time.sleep(600)
 
                     # filter prs
                     for pr in prs:
@@ -82,15 +88,8 @@ def mine_repos():
                                 [pull_request], file, mode='a', header=False)
 
                 except:
-                    failures_count += 1
-
-                    if failures_count == 5:
-                        has_next_page = False
-                        CsvUtils.save_list_to_csv(
-                            [repo], 'non_read_repos.csv', mode='a', header=False)
-                    else:
-                        time.sleep(180)
-                        token.next_token()
+                    time.sleep(180)
+                    token.next_token()
             bar.update(index)
 
 
